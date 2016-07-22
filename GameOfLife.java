@@ -15,8 +15,13 @@ public class GameOfLife {
 	public static void main(String[] args){
 
 		Scanner scnr = new Scanner(System.in);
+		
+		Worlds gliderWorld = new Worlds();
+		Worlds beaconWorld = new Worlds();
+		Worlds boatWorld = new Worlds();
+		Worlds rPentominoWorld = new Worlds();
+		Worlds randomWorld = new Worlds();
 
-		//choice is main menu choice, and genNum is Generation Number
 		int choice = 0;
 		int genNum = 0;
 
@@ -26,19 +31,17 @@ public class GameOfLife {
 		boolean [][] newWorld = 
 				new boolean [Config.WORLD_ROWS][Config.WORLD_COLUMNS];
 
-		//the boolean used for input validation
 		boolean isValid;
-
-		//this is whether the user goes to next generation or exits
 		String goToNextGen;
 
-		//Display Welcome message 
 		System.out.print("Welcome to the Game Of Life");
 		System.out.println();
 
-		//Looping until the user enters 9, for Exit
 		while (choice != 9) {
 			do{
+				
+				clearWorld(world);
+				
 				//menu choices      			
 				System.out.println("Select a pattern of life for the world");
 				System.out.println("1 - Glider");
@@ -64,7 +67,7 @@ public class GameOfLife {
 			//initializing the world based on the user's choice	
 			//user chose choice 1, Glider World
 			if (choice == 1) {
-				initializeGlider(world);
+				gliderWorld.initializeGlider(world);
 				printWorld("Glider", world, genNum);
 				goToNextGen = scnr.nextLine();
 				//going to next gen as long as user presses only enter
@@ -80,7 +83,7 @@ public class GameOfLife {
 
 			//user chose choice 2, Beacon World
 			else if (choice == 2) {
-				initializeBeacon(world);
+				beaconWorld.initializeBeacon(world);
 				printWorld("Beacon", world, genNum);
 				goToNextGen = scnr.nextLine();
 				//going to next gen as long as user presses only enter
@@ -96,7 +99,7 @@ public class GameOfLife {
 
 			//user chose choice 3, Boat World
 			else if (choice == 3) {
-				initializeBoat(world);
+				boatWorld.initializeBoat(world);
 				printWorld("Boat", world, genNum);
 				goToNextGen = scnr.nextLine();
 				//going to next gen as long as user presses only enter
@@ -112,7 +115,7 @@ public class GameOfLife {
 
 			//user chose choice 4, R-Pentomino World
 			else if (choice == 4) {
-				initializeRpentomino(world);
+				rPentominoWorld.initializeRpentomino(world);
 				printWorld("R-pentomino", world, genNum);
 				goToNextGen = scnr.nextLine();
 				//going to next gen as long as user presses only enter
@@ -128,7 +131,7 @@ public class GameOfLife {
 
 			//user chose choice 5, Random World
 			else if (choice == 5) {
-				initializeRandomWorld(world);
+				randomWorld.initializeRandomWorld(world);
 				printWorld("Random", world, genNum);
 				goToNextGen = scnr.nextLine();
 				//going to next gen as long as user presses only enter
@@ -153,7 +156,7 @@ public class GameOfLife {
 		//closing Scanner to prevent leaks
 		scnr.close();
 	} 
-
+	
 	/**
 	 * Creates a new world
 	 * @param numRows The number of rows to be in the created world
@@ -198,185 +201,6 @@ public class GameOfLife {
 			}
 		}
 	}	
-
-	/**
-	 * Initializes the world to the Glider pattern.
-	 * <pre>
-	 * ..........
-	 * .@........
-	 * ..@@......
-	 * .@@.......
-	 * ..........
-	 * ..........
-	 * ..........
-	 * ..........
-	 * ..........
-	 * ..........
-	 * </pre>
-	 * @param world  the existing double dimension array that will be 
-	 * reinitialized to the Glider pattern. 
-	 */
-	public static void initializeGlider(boolean[][]world) {
-
-		//initialize to all false values
-		clearWorld(world);
-
-		//in the world set the cells to true that are alive for the 
-		// Glider pattern.
-		for (int i = 0; i < world.length; i++) {
-			for (int j = 0; j < world[i].length; j++) {
-				if ((i == 1 && j == 1) || (i == 2 && j == 2) ||
-						(i == 2 && j == 3) || (i == 3 && j == 1) ||
-						(i == 3 && j == 2)) {
-					world[i][j] = true;
-				}
-				else
-					world[i][j] = false;
-			}
-		}
-	}
-
-	/**.
-	 * Initializes the world to the Beacon pattern.
-	 * <pre>
-	 * ..........
-	 * .@@.......
-	 * .@........
-	 * ....@.....
-	 * ...@@.....
-	 * ..........
-	 * ..........
-	 * ..........
-	 * ..........
-	 * ..........
-	 * </pre> 
-	 * @param world the existing double dimension array that will be 
-	 * reinitialized to the Beacon pattern.
-	 */		
-	public static void initializeBeacon(boolean[][] world) {
-
-		//initialize to all false values
-		clearWorld(world);
-
-		//in the world set the cells to true that are alive for the 
-		// Beacon pattern.
-		for (int i = 0; i < world.length; i++) {
-			for (int j = 0; j < world[i].length; j++) {
-				if ((i == 1 && j == 1) || (i == 2 && j == 1) ||
-						(i == 1 && j == 2) || (i == 4 && j == 4) ||
-						(i == 3 && j == 4) || (i == 4 && j == 3)) {
-					world[i][j] = true;
-				}
-				else
-					world[i][j] = false;
-			}
-		}
-	}
-
-	/**
-	 * Initializes the world to the Boat pattern.
-	 * <pre>
-	 * ..........
-	 * .@@.......
-	 * .@.@......
-	 * ..@.......
-	 * ..........
-	 * ..........
-	 * ..........
-	 * ..........
-	 * ..........
-	 * ..........
-	 * </pre> 
-	 * @param world the existing double dimension array that will be 
-	 * reinitialized to the Boat pattern.
-	 */		
-	public static void initializeBoat(boolean[][] world) {
-
-		//initialize to all false values
-		clearWorld(world);
-
-		//in the world set the cells to true that are alive for the 
-		// Boat pattern.
-		for (int i = 0; i < world.length; i++) {
-			for (int j = 0; j < world[i].length; j++) {
-				if ((i == 1 && j == 1) || (i == 2 && j == 1) ||
-						(i == 1 && j == 2) || (i == 2 && j == 3) ||
-						(i == 3 && j == 2)) {
-					world[i][j] = true;
-				}
-				else
-					world[i][j] = false;	
-			}
-		}
-	}
-
-	/**
-	 * Initializes the world to the R-pentomino pattern.
-	 * <pre>
-	 * ..........
-	 * ..@@......
-	 * .@@.......
-	 * ..@.......
-	 * ..........
-	 * ..........
-	 * ..........
-	 * ..........
-	 * ..........
-	 * ..........
-	 * </pre> 
-	 * @param world the existing double dimension array that will be 
-	 * reinitialized to the R-pentomino pattern.
-	 */		
-	public static void initializeRpentomino(boolean[][] world) {
-
-		//initialize to all false values
-
-		//in the world set the cells to true that are alive for the 
-		// R-pentomino pattern.
-		for (int i = 0; i < world.length; i++) {
-			for (int j = 0; j < world[i].length; j++) {
-				if ((i == 1 && j == 2) || (i == 1 && j == 3) ||
-						(i == 2 && j == 1) || (i == 2 && j == 2) ||
-						(i == 3 && j == 2)) {
-					world[i][j] = true;
-				}
-				else
-					world[i][j] = false;	
-			}
-		}
-	}
-
-	/**
-	 * Initialize the GameOfLife world with a random selection of cells alive. 
-	 * 
-	 * @param world  the existing double dimension array that will be 
-	 * reinitialized to a Random pattern.
-	 */	
-	public static void initializeRandomWorld(boolean[][] world){
-
-		//initialize to all false values
-		clearWorld(world);
-		//loop through every row
-		for (int i = 0; i < Config.WORLD_ROWS; i++) {
-			//here we are within a row, so loop through every column
-			for (int j = 0; j < Config.WORLD_COLUMNS; j++) {
-				//for the cell in the specific row and column, give it a 
-				//true value 'Config.CHANCE_ALIVE' percent of the time.
-				//(hint: if Config.CHANCE_ALIVE is 0.25, then there should be 
-				// about a 25% chance this cell is alive.  
-				// Recall that the nextDouble() method from the 
-				//java.util.Random 
-				// class returns a uniformly distributed double value between 
-				// 0.0 and 1.0.)            	
-				if(Config.RNG.nextDouble() < Config.CHANCE_ALIVE) {
-					//set cell to be alive
-					world[i][j] = true;
-				}
-				else 
-					world[i][j] = false;
-			}
-		}
-	}
 
 	/** 
 	 * Whether a cell is living in the next generation of the game.
