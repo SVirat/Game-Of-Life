@@ -5,6 +5,10 @@
  * The constants and random seed generator are declared in Config.java. To 
  * change the pattern of the random world, change the seed value.
  * 
+ * This was initially created for an undergraduate project given by 
+ * University of Wisconsin-Madison, but has since been updated to handle
+ * object-oriented programming.
+ * 
  * @author Virat Singh, vsingh28@wisc.edu
  */
 
